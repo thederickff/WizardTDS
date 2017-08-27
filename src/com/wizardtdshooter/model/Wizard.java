@@ -9,7 +9,7 @@ import com.wizardtdshooter.controller.Handler;
 public class Wizard extends GameObject {
 
 	private Handler handler;
-	private int speed = 5;
+	private int speed = 3;
 	private int width = 32;
 	private int height = 48;
 
