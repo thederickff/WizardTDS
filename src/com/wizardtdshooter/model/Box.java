@@ -8,8 +8,8 @@ import com.wizardtdshooter.view.Window;
 
 public class Box extends GameObject {
 
-	public Box(int x, int y) {
-		super(x, y);
+	public Box(int x, int y, ID id) {
+		super(x, y, id);
 		velX = 1;
 		velY = -1;
 	}

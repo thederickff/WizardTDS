@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 import com.wizardtdshooter.controller.Handler;
 import com.wizardtdshooter.model.Box;
+import com.wizardtdshooter.model.ID;
 
 public class Game extends JPanel implements ActionListener {
 
@@ -25,9 +26,8 @@ public class Game extends JPanel implements ActionListener {
 		setDoubleBuffered(true);
 		////////////////////////
 		handler = new Handler();
-		handler.addObject(new Box(100, 300));
-		handler.addObject(new Box(200, 200));
-		handler.addObject(new Box(300, 100));
+		handler.addObject(new Box(100, 300, ID.Block));
+
 		///////////////////////
 		start();
 	}
