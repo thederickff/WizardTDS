@@ -23,8 +23,21 @@ public class Wizard extends GameObject {
 	public void tick() {
 		this.x += velX;
 		this.y += velY;
-
+		
+		colision();
 		movement();
+	}
+	private void colision() {
+		for(int i = 0; i < handler.object.size(); i++) {
+			GameObject tempObject = handler.object.get(i);
+			
+			if(tempObject.getId() == ID.Block) {
+				if(this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
+		}
 	}
 
 	private void movement() {
