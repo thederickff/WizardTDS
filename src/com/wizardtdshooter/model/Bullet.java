@@ -5,13 +5,14 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.wizardtdshooter.controller.Handler;
+import com.wizardtdshooter.controller.SpriteSheet;
 
 public class Bullet extends GameObject {
 
 	private Handler handler;
 
-	public Bullet(int x, int y, ID id, Handler handler, int mx, int my) {
-		super(x, y, id);
+	public Bullet(int x, int y, ID id, Handler handler, SpriteSheet ss, int mx, int my) {
+		super(x, y, id, ss);
 		this.handler = handler;
 		this.velX = (mx - x) / 10;
 		this.velY = (my - y) / 10;

@@ -1,13 +1,18 @@
 package com.wizardtdshooter.model;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+
+import com.wizardtdshooter.controller.SpriteSheet;
 
 public class Crate extends GameObject {
 
-	public Crate(int x, int y, ID id) {
-		super(x, y, id);
+	private BufferedImage crate_image;
+	
+	public Crate(int x, int y, ID id, SpriteSheet ss) {
+		super(x, y, id, ss);
+		this.crate_image = ss.grabImage(6, 2, 32, 32);
 	}
 
 	@Override
@@ -17,8 +22,7 @@ public class Crate extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.orange.darker());
-		g.fillRect(x, y, 16, 16);
+		g.drawImage(this.crate_image, x, y, null);
 	}
 
 	@Override

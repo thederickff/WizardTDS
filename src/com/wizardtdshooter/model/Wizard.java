@@ -3,20 +3,24 @@ package com.wizardtdshooter.model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import com.wizardtdshooter.controller.Handler;
+import com.wizardtdshooter.controller.SpriteSheet;
 import com.wizardtdshooter.view.Window;
 
 public class Wizard extends GameObject {
 
 	private Handler handler;
+	private BufferedImage wizard_image;
 	private int speed = 3;
 	private int width = 32;
 	private int height = 48;
 
-	public Wizard(int x, int y, ID id, Handler handler) {
-		super(x, y, id);
+	public Wizard(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+		super(x, y, id, ss);
 		this.handler = handler;
+		this.wizard_image = ss.grabImage(1, 1, 32, 48);
 	}
 
 	@Override
@@ -72,8 +76,7 @@ public class Wizard extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.cyan.darker());
-		g.fillRect(x, y, width, height);
+		g.drawImage(this.wizard_image, x, y, null);
 	}
 
 	@Override

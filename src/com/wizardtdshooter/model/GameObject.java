@@ -3,6 +3,8 @@ package com.wizardtdshooter.model;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import com.wizardtdshooter.controller.SpriteSheet;
+
 public abstract class GameObject {
 
 	protected int x;
@@ -10,11 +12,13 @@ public abstract class GameObject {
 	protected float velX = 0;
 	protected float velY = 0;
 	protected ID id;
+	protected SpriteSheet ss;
 
-	public GameObject(int x, int y, ID id) {
+	public GameObject(int x, int y, ID id, SpriteSheet ss) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
+		this.ss = ss;
 	}
 
 	public abstract void tick();

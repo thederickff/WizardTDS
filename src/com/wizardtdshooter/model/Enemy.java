@@ -1,25 +1,28 @@
 package com.wizardtdshooter.model;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import com.wizardtdshooter.controller.Handler;
+import com.wizardtdshooter.controller.SpriteSheet;
 
 public class Enemy extends GameObject {
 
 	private Handler handler;
 	private Random r;
+	private BufferedImage enemy_image;
 	private int choose;
 	private int hp;
 
-	public Enemy(int x, int y, ID id, Handler handler) {
-		super(x, y, id);
+	public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+		super(x, y, id, ss);
 		this.choose = 0;
 		this.hp = 100;
 		this.handler = handler;
 		this.r = new Random();
+		this.enemy_image = ss.grabImage(4, 1, 32, 32);
 	}
 
 	@Override
@@ -67,8 +70,7 @@ public class Enemy extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.MAGENTA.darker());
-		g.fillRect(x, y, 32, 32);
+		g.drawImage(this.enemy_image, x, y, null);
 	}
 
 	@Override
