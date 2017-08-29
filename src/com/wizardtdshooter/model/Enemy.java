@@ -52,10 +52,10 @@ public class Enemy extends GameObject {
 					this.handler.removeObject(tempObject);
 				}
 			}
-			
-			if(tempObject.getId() == ID.Player) {
-				if(this.getBounds().intersects(tempObject.getBounds())) {
-					System.exit(0);
+
+			if (tempObject.getId() == ID.Player) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+
 				}
 			}
 		}

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import com.wizardtdshooter.controller.Handler;
+import com.wizardtdshooter.view.Window;
 
 public class Wizard extends GameObject {
 
@@ -15,7 +16,6 @@ public class Wizard extends GameObject {
 
 	public Wizard(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
-
 		this.handler = handler;
 	}
 
@@ -23,18 +23,25 @@ public class Wizard extends GameObject {
 	public void tick() {
 		this.x += velX;
 		this.y += velY;
-		
+
 		collision();
 		movement();
 	}
+
 	private void collision() {
-		for(int i = 0; i < handler.object.size(); i++) {
+		for (int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
-			
-			if(tempObject.getId() == ID.Block) {
-				if(this.getBounds().intersects(tempObject.getBounds())) {
+
+			if (tempObject.getId() == ID.Block) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
 					this.x += this.velX * -1;
 					this.y += this.velY * -1;
+				}
+			}
+			if (tempObject.getId() == ID.Crate) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					Window.ammo += 30;
+					handler.removeObject(tempObject);
 				}
 			}
 		}

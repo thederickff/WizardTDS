@@ -16,6 +16,7 @@ import com.wizardtdshooter.controller.Handler;
 import com.wizardtdshooter.controller.KeyInput;
 import com.wizardtdshooter.controller.MouseInput;
 import com.wizardtdshooter.model.Block;
+import com.wizardtdshooter.model.Crate;
 import com.wizardtdshooter.model.Enemy;
 import com.wizardtdshooter.model.ID;
 import com.wizardtdshooter.model.Wizard;
@@ -32,7 +33,7 @@ public class Game extends JPanel implements ActionListener {
 	public Game() {
 		////////////////////////
 		handler = new Handler();
-		camera = new Camera(0, 0);
+		camera = new Camera();
 
 		BufferedImageLoader loader = new BufferedImageLoader();
 		this.level = loader.loadImage("/wizard_level.png");
@@ -67,10 +68,10 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	public void tick() {
-		
+
 		// Update Camera
-		for(int i = 0; i < handler.object.size(); i++) {
-			if(handler.object.get(i).getId() == ID.Player) {
+		for (int i = 0; i < handler.object.size(); i++) {
+			if (handler.object.get(i).getId() == ID.Player) {
 				camera.tick(handler.object.get(i));
 			}
 		}
@@ -80,14 +81,14 @@ public class Game extends JPanel implements ActionListener {
 	public void paint(Graphics g) {
 		osSupport();
 		Graphics2D g2 = (Graphics2D) g;
-		
+
 		g.setColor(Color.red.darker().darker());
 		g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 		////////////////////////////////
 		g2.translate(-camera.getX(), -camera.getY());
-		
+
 		handler.render(g);
-		
+
 		g2.translate(camera.getX(), camera.getY());
 		////////////////////////////////
 		g.dispose();
@@ -101,21 +102,23 @@ public class Game extends JPanel implements ActionListener {
 		for (int xx = 0; xx < w; xx++) {
 			for (int yy = 0; yy < h; yy++) {
 				int pixel = image.getRGB(xx, yy);
-				
+
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
 
-				if (blue == 255) {
-					handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler));
-				}
 				if (red == 255) {
 					handler.addObject(new Block(xx * 32, yy * 32, ID.Block));
 				}
-				if(green == 255) {
+				if (green == 255 && blue != 255) {
 					handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler));
 				}
-
+				if (blue == 255 && green != 255) {
+					handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler));
+				}
+				if (blue == 255 && green == 255) {
+					handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate));
+				}
 			}
 		}
 	}
