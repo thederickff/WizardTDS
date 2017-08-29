@@ -14,7 +14,9 @@ import javax.swing.Timer;
 import com.wizardtdshooter.controller.BufferedImageLoader;
 import com.wizardtdshooter.controller.Handler;
 import com.wizardtdshooter.controller.KeyInput;
+import com.wizardtdshooter.controller.MouseInput;
 import com.wizardtdshooter.model.Block;
+import com.wizardtdshooter.model.Enemy;
 import com.wizardtdshooter.model.ID;
 import com.wizardtdshooter.model.Wizard;
 
@@ -40,6 +42,7 @@ public class Game extends JPanel implements ActionListener {
 		this.setFocusable(true);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(new KeyInput(handler));
+		this.addMouseListener(new MouseInput(handler, camera));
 		this.start();
 	}
 
@@ -98,8 +101,9 @@ public class Game extends JPanel implements ActionListener {
 		for (int xx = 0; xx < w; xx++) {
 			for (int yy = 0; yy < h; yy++) {
 				int pixel = image.getRGB(xx, yy);
+				
 				int red = (pixel >> 16) & 0xff;
-				// int green = (pixel >> 8) & 0xff;
+				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
 
 				if (blue == 255) {
@@ -107,6 +111,9 @@ public class Game extends JPanel implements ActionListener {
 				}
 				if (red == 255) {
 					handler.addObject(new Block(xx * 32, yy * 32, ID.Block));
+				}
+				if(green == 255) {
+					handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler));
 				}
 
 			}

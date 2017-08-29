@@ -12,7 +12,6 @@ public class Window {
 
 	public Window(int width, int height, String title, Game game) {
 		JFrame frame = new JFrame(title);
-
 		frame.add(game);
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setPreferredSize(new Dimension(width, height));

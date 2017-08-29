@@ -24,10 +24,10 @@ public class Wizard extends GameObject {
 		this.x += velX;
 		this.y += velY;
 		
-		colision();
+		collision();
 		movement();
 	}
-	private void colision() {
+	private void collision() {
 		for(int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
 			
