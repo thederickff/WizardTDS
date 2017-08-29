@@ -9,6 +9,7 @@ public class Window {
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 563;
 	public static final String operatingSystem = System.getProperty("os.name");
+	public static int hp = 50;
 	public static int ammo = 30;
 
 	public Window(int width, int height, String title, Game game) {

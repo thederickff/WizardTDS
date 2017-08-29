@@ -1,5 +1,7 @@
 package com.wizardtdshooter.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -18,6 +20,7 @@ import com.wizardtdshooter.controller.SpriteSheet;
 import com.wizardtdshooter.model.Block;
 import com.wizardtdshooter.model.Crate;
 import com.wizardtdshooter.model.Enemy;
+import com.wizardtdshooter.model.Door;
 import com.wizardtdshooter.model.ID;
 import com.wizardtdshooter.model.Wizard;
 
@@ -32,8 +35,7 @@ public class Game extends JPanel implements ActionListener {
 	private BufferedImage sprite_sheet = null;
 	private BufferedImage floor = null;
 	private Camera camera;
-	
-	
+
 	public Game() {
 		////////////////////////
 		handler = new Handler();
@@ -74,31 +76,49 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	public void tick() {
-
+		int enemy = 0;
 		// Update Camera
 		for (int i = 0; i < handler.object.size(); i++) {
 			if (handler.object.get(i).getId() == ID.Player) {
 				camera.tick(handler.object.get(i));
 			}
+			if (handler.object.get(i).getId() == ID.Enemy) {
+				enemy++;
+			}
 		}
 		handler.tick();
+		if (enemy <= 0) {
+			this.isRunning = false;
+		}
+		enemy = 0;
 	}
 
 	public void paint(Graphics g) {
 		osSupport();
 		Graphics2D g2 = (Graphics2D) g;
-
 		////////////////////////////////
 		g2.translate(-camera.getX(), -camera.getY());
-		
-		for (int xx = 0; xx < 30*72; xx+= 32){
-			for (int yy = 0; yy < 30*72;yy+= 32) {
+
+		for (int xx = 0; xx < 30 * 72; xx += 32) {
+			for (int yy = 0; yy < 30 * 72; yy += 32) {
 				g.drawImage(this.floor, xx, yy, null);
 			}
 		}
 		handler.render(g);
-
 		g2.translate(camera.getX(), camera.getY());
+
+		g.setColor(Color.red.darker());
+		g.fillRect(20, 20, 200, 25);
+		g.setColor(Color.green.darker());
+		g.fillRect(20, 20, Window.hp * 4, 25);
+		g.setColor(Color.white);
+		g.setFont(new Font("Arial", 0, 14));
+
+		int ammo = Window.ammo % 16;
+		int onHand = Window.ammo / 16;
+		g.drawString("" + onHand, 105, 60);
+		g.setFont(new Font("Arial", 0, 16));
+		g.drawString("Ammo:  " + ammo, 20, 60);
 		////////////////////////////////
 		g.dispose();
 	}
@@ -116,17 +136,20 @@ public class Game extends JPanel implements ActionListener {
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
 
-				if (red == 255) {
+				if (red == 255 && blue != 255 && green != 255) {
 					handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss));
 				}
-				if (green == 255 && blue != 255) {
+				if (green == 255 && blue != 255 && red != 255) {
 					handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler, ss));
 				}
-				if (blue == 255 && green != 255) {
+				if (blue == 255 && green != 255 && red != 255) {
 					handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, ss));
 				}
-				if (blue == 255 && green == 255) {
+				if (blue == 255 && green == 255 && red != 255) {
 					handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));
+				}
+				if (blue == 255 && green == 255 && red == 255) {
+					handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
 				}
 			}
 		}

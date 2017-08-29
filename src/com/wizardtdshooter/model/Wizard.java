@@ -1,9 +1,10 @@
 package com.wizardtdshooter.model;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+import javax.swing.JOptionPane;
 
 import com.wizardtdshooter.controller.Handler;
 import com.wizardtdshooter.controller.SpriteSheet;
@@ -30,6 +31,11 @@ public class Wizard extends GameObject {
 
 		collision();
 		movement();
+		
+		if(Window.hp <= 0) {
+			JOptionPane.showMessageDialog(null, "Game Over");
+			System.exit(0);
+		}
 	}
 
 	private void collision() {
@@ -46,6 +52,17 @@ public class Wizard extends GameObject {
 				if (this.getBounds().intersects(tempObject.getBounds())) {
 					Window.ammo += 30;
 					handler.removeObject(tempObject);
+				}
+			}
+			if (tempObject.getId() == ID.Enemy) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					Window.hp--;
+				}
+			}
+			if (tempObject.getId() == ID.Door) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					JOptionPane.showMessageDialog(null, "Congragulations, you won!");
+					System.exit(0);
 				}
 			}
 		}

@@ -37,12 +37,13 @@ public class Enemy extends GameObject {
 
 			if (tempObject.getId() == ID.Block) {
 				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
-					this.x += (velX * 2) * -1;
-					this.y += (velY * 2) * -1;
-					this.velX = 0;
-					this.velY = 0;
-					// this.x += velX * -1;
-					// this.y += velY * -1;
+					//this.x += (velX * 2) * -1;
+					//this.y += (velY * 2) * -1;
+					
+					 this.x += velX * -1;
+				     this.y += velY * -1;
+				     this.velX = 0;
+						this.velY = 0;
 				} else if (choose == 0) {
 					this.velX = (r.nextInt(4 - -4) + -4);
 					this.velY = (r.nextInt(4 - -4) + -4);

@@ -33,7 +33,6 @@ public class MouseInput extends MouseAdapter {
 					handler.addObject(
 							new Bullet(tempObject.getX() + 16, tempObject.getY() + 24, ID.Bullet, handler, ss, mx, my));
 					Window.ammo -= 1;
-					System.out.println(Window.ammo);
 				}
 			}
 		}

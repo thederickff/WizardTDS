@@ -5,5 +5,6 @@ public enum ID {
 	Block(),
 	Crate(),
 	Bullet(),
-	Enemy();
+	Enemy(),
+	Door();
 }
