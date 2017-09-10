@@ -8,9 +8,10 @@ import com.wizardtdshooter.model.GameObject;
 public class Handler {
 
 	public LinkedList<GameObject> object = new LinkedList<GameObject>();
+	public LinkedList<GameObject> object2 = new LinkedList<GameObject>();
 
 	private boolean up = false, down = false, left = false, right = false;
-
+	
 	public void tick() {
 		for (int i = 0; i < object.size(); i++) {
 			GameObject tempObject = object.get(i);
